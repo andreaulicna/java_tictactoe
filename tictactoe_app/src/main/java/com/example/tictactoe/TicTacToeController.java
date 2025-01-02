@@ -20,6 +20,7 @@ public class TicTacToeController {
     private Player currentPlayer;
     private Player playerX;
     private Player playerO;
+    private boolean gameOver;
 
     
     public TicTacToeController() {
@@ -28,8 +29,6 @@ public class TicTacToeController {
 
     @GetMapping("/")
     public String index(Model model) {
-        logger.info("Board state: {}", this.board);
-        logger.info("Value at (0,0): {}", this.board.getValue(0, 0));
         model.addAttribute("board", this.board);
         model.addAttribute("currentPlayer", this.currentPlayer.getSymbol());
         return "index";
@@ -37,19 +36,38 @@ public class TicTacToeController {
 
     @PostMapping("/move")
     public String makeMove(@RequestParam int row, @RequestParam int col, Model model) {
-        if (this.board.makeMove(row, col, this.currentPlayer.getSymbol())) {
-            if (this.board.isWinner(this.currentPlayer.getSymbol())) {
-                model.addAttribute("message", "Player " + this.currentPlayer.getSymbol() + " wins!");
-            } else if (this.board.isFull()) {
-                model.addAttribute("message", "The game is a tie!");
-            } else {
-                switchPlayer();
-            }
+        if (gameOver) {
+            model.addAttribute("message", "This game has ended - please create a new one.");
         } else {
-            model.addAttribute("message", "This move is not valid");
+                if (this.board.makeMove(row, col, this.currentPlayer.getSymbol())) {
+                    if (this.board.isWinner(this.currentPlayer.getSymbol())) {
+                        model.addAttribute("message", "Player " + this.currentPlayer.getSymbol() + " wins!");
+                        gameOver = true;
+                    } else if (this.board.isFull()) {
+                        model.addAttribute("message", "The game is a tie!");
+                        gameOver = true;
+                    } else {
+                        switchPlayer();
+                    }
+                } else {
+                    model.addAttribute("message", "This move is not valid");
+                }
         }
         model.addAttribute("board", this.board);
         model.addAttribute("currentPlayer", this.currentPlayer.getSymbol());
+        model.addAttribute("gameOver", this.gameOver);
+        return "index";
+    }
+
+    @PostMapping("/reset")
+    public String resetGame(Model model) {
+        this.board = new Board();
+        this.gameOver = false;
+        initializePlayers(1); // Reset players
+        model.addAttribute("board", this.board);
+        model.addAttribute("currentPlayer", this.currentPlayer.getSymbol());
+        model.addAttribute("message", "Game has been reset. Let's play again!");
+        model.addAttribute("gameOver", this.gameOver);
         return "index";
     }
 

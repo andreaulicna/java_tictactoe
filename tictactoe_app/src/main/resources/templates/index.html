@@ -12,11 +12,14 @@
                 <form th:action="@{/move}" method="post">
                     <input type="hidden" name="row" th:value="${row}" />
                     <input type="hidden" name="col" th:value="${col}" />
-                    <button type="submit" th:text="${board.getValue(row, col)}"> </button>
+                    <button type="submit" th:text="${board.getValue(row, col)}" th:disabled="${gameOver}"> </button>
                 </form>
             </td>
         </tr>
     </table>
     <p th:text="${message}"></p>
+    <form th:if="${gameOver}" th:action="@{/reset}" method="post">
+        <button type="submit">Play Again</button>
+    </form>
 </body>
 </html>
