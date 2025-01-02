@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <p th:text="'Current Player: ' + ${currentPlayer}"></p>
+    <table>
+        <tr th:each="row, rowStat : ${#numbers.sequence(0, 2)}">
+            <td th:each="col, colStat : ${#numbers.sequence(0, 2)}">
+                <form th:action="@{/move}" method="post">
+                    <input type="hidden" name="row" th:value="${row}" />
+                    <input type="hidden" name="col" th:value="${col}" />
+                    <button type="submit" th:text="${board.getValue(row, col)}"> </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <p th:text="${message}"></p>
+</body>
+</html>
