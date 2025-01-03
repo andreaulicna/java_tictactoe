@@ -16,33 +16,43 @@ public class Board {
         }
     }
 
-    public void printBoard() {
-        System.out.println("-------------");
+	@Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 3; i++) {
-            System.out.print("| ");
             for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " | ");
+                sb.append(board[i][j]);
+                if (j < 2) sb.append(" | ");
             }
-            System.out.println();
-            System.out.println("-------------");
+            sb.append("\n");
+            if (i < 2) sb.append("---------\n");
         }
+        return sb.toString();
     }
 
-    public boolean isWinner(char player) {
-        for (int i = 0; i < 3; i++) {
-            if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
-                (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
-                return true;
-            }
-        }
+	public char checkWinner() {
+    	// Check rows and columns
+    	for (int i = 0; i < 3; i++) {
+    	    if (board[i][0] != ' ' && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+    	        return board[i][0]; // Row match
+    	    }
+    	    if (board[0][i] != ' ' && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+    	        return board[0][i]; // Column match
+    	    }
+    	}
 
-        if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
-            (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
-            return true;
-        }
+    	// Check diagonals
+    	if (board[0][0] != ' ' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+    	    return board[0][0];
+    	}
+    	if (board[0][2] != ' ' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+    	    return board[0][2];
+    	}
 
-        return false;
-    }
+    	// No winner
+    	return ' ';
+	}
+
 
     public boolean isFull() {
         for (int i = 0; i < 3; i++) {
@@ -55,15 +65,23 @@ public class Board {
         return true;
     }
 
-    public boolean makeMove(int row, int col, char player) {
+    public boolean updateWithNewMove(int row, int col, char player) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == ' ') {
             board[row][col] = player;
             return true;
         }
         return false;
     }
+
+	public void undoMove(int row, int col, char player) {
+		board[row][col] = player;
+	}
     
     public String getValue(int row, int col) {
         return String.valueOf(board[row][col]);
+    }
+
+    public char getCharValue(int row, int col) {
+        return board[row][col];
     }
 }

@@ -67,7 +67,7 @@ public class TicTacToeController {
     @PostMapping("/move")
     public String makeMove(@RequestParam int row, @RequestParam int col, Model model) {
         if (!this.gameOver) {
-            if (this.board.makeMove(row, col, this.currentPlayer.getSymbol())) {
+            if (this.board.updateWithNewMove(row, col, this.currentPlayer.getSymbol())) {
                 if (!checkWinnerOrTie(model)) {
                     switchPlayer();
                     if (this.mode == GameMode.AI_PLAY && this.currentPlayer instanceof AIPlayer) {
@@ -111,15 +111,15 @@ public class TicTacToeController {
     }
 
     private void initializePlayers() {
-        Random random = new Random();
-        if (random.nextBoolean()) {
-            this.playerX = new LocalPlayer('X', new Scanner(System.in));
-            this.playerO = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('O', new Scanner(System.in)) : new AIPlayer('O');
-        } else {
-            this.playerO = new LocalPlayer('O', new Scanner(System.in));
-            this.playerX = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('X', new Scanner(System.in)) : new AIPlayer('X');
-        }
-        this.currentPlayer = this.playerX;
+    	Random random = new Random();
+    	if (random.nextBoolean()) {
+    	    this.playerX = new LocalPlayer('X');
+    	    this.playerO = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('O') : new AIPlayer('O');
+    	} else {
+    	    this.playerO = new LocalPlayer('O');
+    	    this.playerX = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('X') : new AIPlayer('X');
+    	}
+      	this.currentPlayer = this.playerX;
     }
 
     private void switchPlayer() {
@@ -127,7 +127,7 @@ public class TicTacToeController {
     }
 
     private boolean checkWinnerOrTie(Model model) {
-        if (this.board.isWinner(this.currentPlayer.getSymbol())) {
+        if (this.board.checkWinner() != ' ') {
             model.addAttribute("message", "Player " + this.currentPlayer.getSymbol() + " wins!");
             this.gameOver = true;
             return true;
