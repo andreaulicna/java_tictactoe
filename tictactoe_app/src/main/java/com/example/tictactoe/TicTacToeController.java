@@ -21,40 +21,57 @@ public class TicTacToeController {
     private Player playerX;
     private Player playerO;
     private boolean gameOver;
+    private GameMode mode;
 
     
     public TicTacToeController() {
-        initializePlayers(1); // Default to LocalPlay for now
+        
     }
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("board", this.board);
-        model.addAttribute("currentPlayer", this.currentPlayer.getSymbol());
+        model.addAttribute("currentPlayer", this.currentPlayer);
+        model.addAttribute("gameOver", this.gameOver);
+        return "index";
+    }
+
+    @GetMapping("/chooseMode")
+    public String chooseMode() {
+        return "chooseMode";
+    }
+
+    @PostMapping("/startGame")
+    public String startGame(@RequestParam("mode") GameMode mode, Model model) {
+        this.mode = mode;
+        initializePlayers();
+        this.board = new Board();
+        this.gameOver = false;
+        model.addAttribute("board", this.board);
+        model.addAttribute("currentPlayer", this.currentPlayer);
+        model.addAttribute("gameOver", this.gameOver);
         return "index";
     }
 
     @PostMapping("/move")
     public String makeMove(@RequestParam int row, @RequestParam int col, Model model) {
-        if (gameOver) {
-            model.addAttribute("message", "This game has ended - please create a new one.");
-        } else {
-                if (this.board.makeMove(row, col, this.currentPlayer.getSymbol())) {
-                    if (this.board.isWinner(this.currentPlayer.getSymbol())) {
-                        model.addAttribute("message", "Player " + this.currentPlayer.getSymbol() + " wins!");
-                        gameOver = true;
-                    } else if (this.board.isFull()) {
-                        model.addAttribute("message", "The game is a tie!");
-                        gameOver = true;
-                    } else {
-                        switchPlayer();
+        if (!this.gameOver) {
+            if (this.board.makeMove(row, col, this.currentPlayer.getSymbol())) {
+                if (!checkWinnerOrTie(model)) {
+                    switchPlayer();
+                    if (this.mode == GameMode.AI_PLAY && this.currentPlayer instanceof AIPlayer) {
+                        this.currentPlayer.makeMove(this.board);
+                        if (!checkWinnerOrTie(model)) {
+                            switchPlayer();
+                        }
                     }
-                } else {
-                    model.addAttribute("message", "This move is not valid");
                 }
+            } else {
+                model.addAttribute("message", "This move is not valid");
+            }
         }
         model.addAttribute("board", this.board);
-        model.addAttribute("currentPlayer", this.currentPlayer.getSymbol());
+        model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("gameOver", this.gameOver);
         return "index";
     }
@@ -63,27 +80,40 @@ public class TicTacToeController {
     public String resetGame(Model model) {
         this.board = new Board();
         this.gameOver = false;
-        initializePlayers(1); // Reset players
+        initializePlayers(); // Reset players
         model.addAttribute("board", this.board);
-        model.addAttribute("currentPlayer", this.currentPlayer.getSymbol());
+        model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("message", "Game has been reset. Let's play again!");
         model.addAttribute("gameOver", this.gameOver);
         return "index";
     }
 
-    private void initializePlayers(int mode) {
+    private void initializePlayers() {
         Random random = new Random();
         if (random.nextBoolean()) {
             this.playerX = new LocalPlayer('X', new Scanner(System.in));
-            this.playerO = (mode == 1) ? new LocalPlayer('O', new Scanner(System.in)) : new AIPlayer('O');
+            this.playerO = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('O', new Scanner(System.in)) : new AIPlayer('O');
         } else {
             this.playerO = new LocalPlayer('O', new Scanner(System.in));
-            this.playerX = (mode == 1) ? new LocalPlayer('X', new Scanner(System.in)) : new AIPlayer('X');
+            this.playerX = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('X', new Scanner(System.in)) : new AIPlayer('X');
         }
         this.currentPlayer = this.playerX;
     }
 
     private void switchPlayer() {
         this.currentPlayer = (this.currentPlayer == this.playerX) ? this.playerO : this.playerX;
+    }
+
+    private boolean checkWinnerOrTie(Model model) {
+        if (this.board.isWinner(this.currentPlayer.getSymbol())) {
+            model.addAttribute("message", "Player " + this.currentPlayer.getSymbol() + " wins!");
+            this.gameOver = true;
+            return true;
+        } else if (this.board.isFull()) {
+            model.addAttribute("message", "The game is a tie!");
+            this.gameOver = true;
+            return true;
+        }
+        return false;
     }
 }

@@ -5,8 +5,11 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-    <p th:text="'Current Player: ' + ${currentPlayer}"></p>
-    <table>
+    <p th:if="${currentPlayer == null}">
+        <a th:href="@{/chooseMode}">Let's play!</a>
+    </p>
+    <p th:if="${currentPlayer != null}" th:text="'Current Player: ' + ${currentPlayer.getSymbol()}"></p>
+    <table th:if="${currentPlayer != null}">
         <tr th:each="row, rowStat : ${#numbers.sequence(0, 2)}">
             <td th:each="col, colStat : ${#numbers.sequence(0, 2)}">
                 <form th:action="@{/move}" method="post">
