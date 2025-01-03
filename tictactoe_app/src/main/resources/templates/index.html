@@ -2,13 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Tic Tac Toe</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if the current player is an AI player
+            var isAIPlayer = /*[[${currentPlayer instanceof T(com.example.tictactoe.AIPlayer)}]]*/ false;
+
+            if (isAIPlayer) {
+                // Automatically submit the form to make a move for the AI player
+                document.getElementById("aiMoveForm").submit();
+            }
+        });
+    </script>
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
     <p th:if="${currentPlayer == null}">
         <a th:href="@{/chooseMode}">Let's play!</a>
     </p>
-    <p th:if="${currentPlayer != null}" th:text="'Current Player: ' + ${currentPlayer.getSymbol()}"></p>
+    <p th:if="${currentPlayer != null}" th:text="'Current Player: ' + ${currentPlayer.getSymbol()} + ${currentPlayer}"></p>
     <table th:if="${currentPlayer != null}">
         <tr th:each="row, rowStat : ${#numbers.sequence(0, 2)}">
             <td th:each="col, colStat : ${#numbers.sequence(0, 2)}">
@@ -21,8 +32,15 @@
         </tr>
     </table>
     <p th:text="${message}"></p>
+    <form id="aiMoveForm" th:if="${currentPlayer instanceof T(com.example.tictactoe.AIPlayer)}" th:action="@{/move}" method="post">
+        <input type="hidden" name="row" th:value="${aiMoveRow}" />
+        <input type="hidden" name="col" th:value="${aiMoveCol}" />
+    </form>
     <form th:if="${gameOver}" th:action="@{/reset}" method="post">
         <button type="submit">Play Again</button>
+    </form>
+	    <form th:if="${gameOver}" th:action="@{/chooseMode}" method="get">
+        <button type="submit">Choose a Different Game Mode</button>
     </form>
 </body>
 </html>

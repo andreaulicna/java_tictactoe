@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.tictactoe.AIPlayer;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -40,13 +42,22 @@ public class TicTacToeController {
     public String chooseMode() {
         return "chooseMode";
     }
-
     @PostMapping("/startGame")
     public String startGame(@RequestParam("mode") GameMode mode, Model model) {
         this.mode = mode;
         initializePlayers();
         this.board = new Board();
         this.gameOver = false;
+
+        // If the current player is an AI player, make the AI move immediately
+        if (this.currentPlayer instanceof AIPlayer) {
+            AIPlayer aiPlayer = (AIPlayer) this.currentPlayer;
+            aiPlayer.makeMove(board);
+            if (!checkWinnerOrTie(model)) {
+                switchPlayer();
+            }
+        }
+
         model.addAttribute("board", this.board);
         model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("gameOver", this.gameOver);
@@ -60,7 +71,8 @@ public class TicTacToeController {
                 if (!checkWinnerOrTie(model)) {
                     switchPlayer();
                     if (this.mode == GameMode.AI_PLAY && this.currentPlayer instanceof AIPlayer) {
-                        this.currentPlayer.makeMove(this.board);
+                        AIPlayer aiPlayer = (AIPlayer) this.currentPlayer;
+                        aiPlayer.makeMove(board);
                         if (!checkWinnerOrTie(model)) {
                             switchPlayer();
                         }
@@ -80,7 +92,17 @@ public class TicTacToeController {
     public String resetGame(Model model) {
         this.board = new Board();
         this.gameOver = false;
-        initializePlayers(); // Reset players
+        initializePlayers();
+
+        // If the current player is an AI player, make the AI move immediately
+        if (this.currentPlayer instanceof AIPlayer) {
+            AIPlayer aiPlayer = (AIPlayer) this.currentPlayer;
+            aiPlayer.makeMove(board);
+            if (!checkWinnerOrTie(model)) {
+                switchPlayer();
+            }
+        }
+        
         model.addAttribute("board", this.board);
         model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("message", "Game has been reset. Let's play again!");
