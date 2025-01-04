@@ -1,4 +1,4 @@
-package com.example.tictactoe;
+package com.app.tictactoe.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.tictactoe.AIPlayer;
+import tictactoe_app.src.main.java.com.app.tictactoe.game.AIPlayer;
+import tictactoe_app.src.main.java.com.app.tictactoe.game.Board;
+import tictactoe_app.src.main.java.com.app.tictactoe.game.Player;
+import tictactoe_app.src.main.java.com.app.tictactoe.game.GameMode;
+import tictactoe_app.src.main.java.com.app.tictactoe.game.LocalPlayer;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -39,9 +44,10 @@ public class TicTacToeController {
     }
 
     @GetMapping("/chooseMode")
-    public String chooseMode() {
+    public String chooseMode(Model model) {
         return "chooseMode";
     }
+	
     @PostMapping("/startGame")
     public String startGame(@RequestParam("mode") GameMode mode, Model model) {
         this.mode = mode;

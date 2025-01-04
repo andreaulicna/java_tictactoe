@@ -1,8 +1,10 @@
-package com.example.tictactoe;
+package tictactoe_app.src.main.java.com.app.tictactoe.game;
 
 import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.app.tictactoe.controller.TicTacToeController;
 
 public class AIPlayer extends AbstractPlayer {
 

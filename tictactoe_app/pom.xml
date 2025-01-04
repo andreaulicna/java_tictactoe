@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
+    <groupId>com.app</groupId>
     <artifactId>spring-boot-app</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
@@ -35,13 +35,6 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- slf4j-test for logging tests -->
-        <dependency>
-            <groupId>uk.org.lidalia</groupId>
-            <artifactId>slf4j-test</artifactId>
-            <version>1.2.0</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -50,7 +43,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.example.Spring.boot.app.SpringBootAppApplication</mainClass>
+                    <mainClass>com.app.tictactoe.TicTacToeApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
