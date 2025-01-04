@@ -5,9 +5,20 @@
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
-    <p th:if="${currentPlayer == null}">
-        <a th:href="@{/chooseMode}">Let's play!</a>
-    </p>
+    <div>
+        <p th:if="${user == null}">
+            <a th:href="@{/login}">Login</a> | <a th:href="@{/register}">Register</a>
+        </p>
+        <p th:if="${user != null}" th:text="${user.username} + 's dashboard!'"></p>
+       	<form th:if="${currentPlayer == null}" th:action="@{/startGame}" method="post">
+			<button type="submit" name="mode" value="LOCAL_PLAY">Play Local</button>
+			<br>
+			<button type="submit" name="mode" value="AI_PLAY">Play with AI</button>
+		</form>
+        <form th:if="${user != null && currentPlayer == null}" th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
     <p th:if="${currentPlayer != null}" th:text="'Current Player: ' + ${currentPlayer.getSymbol()} + ${currentPlayer}"></p>
     <table th:if="${currentPlayer != null}">
         <tr th:each="row, rowStat : ${#numbers.sequence(0, 2)}">
@@ -23,9 +34,6 @@
     <p th:text="${message}"></p>
     <form th:if="${gameOver}" th:action="@{/reset}" method="post">
         <button type="submit">Play Again</button>
-    </form>
-    <form th:if="${gameOver}" th:action="@{/chooseMode}" method="get">
-        <button type="submit">Choose a Different Game Mode</button>
     </form>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package tictactoe_app.src.main.java.com.app.tictactoe.game;
+package com.app.tictactoe.game;
 
 public abstract class AbstractPlayer implements Player {
     protected char symbol;

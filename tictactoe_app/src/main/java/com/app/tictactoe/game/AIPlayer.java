@@ -1,4 +1,4 @@
-package tictactoe_app.src.main.java.com.app.tictactoe.game;
+package com.app.tictactoe.game;
 
 import java.util.Random;
 import org.slf4j.Logger;

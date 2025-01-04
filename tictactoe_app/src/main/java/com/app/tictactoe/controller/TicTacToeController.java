@@ -5,18 +5,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import tictactoe_app.src.main.java.com.app.tictactoe.game.AIPlayer;
-import tictactoe_app.src.main.java.com.app.tictactoe.game.Board;
-import tictactoe_app.src.main.java.com.app.tictactoe.game.Player;
-import tictactoe_app.src.main.java.com.app.tictactoe.game.GameMode;
-import tictactoe_app.src.main.java.com.app.tictactoe.game.LocalPlayer;
+import com.app.tictactoe.game.AIPlayer;
+import com.app.tictactoe.game.Board;
+import com.app.tictactoe.game.Player;
+import com.app.tictactoe.game.GameMode;
+import com.app.tictactoe.game.LocalPlayer;
 
 import java.util.Random;
-import java.util.Scanner;
 
 @Controller
 public class TicTacToeController {
@@ -30,9 +32,14 @@ public class TicTacToeController {
     private boolean gameOver;
     private GameMode mode;
 
-    
     public TicTacToeController() {
-        
+    }
+
+    @ModelAttribute
+    public void addUserDetailsToModel(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if (userDetails != null) {
+            model.addAttribute("user", userDetails);
+        }
     }
 
     @GetMapping("/")
@@ -43,11 +50,6 @@ public class TicTacToeController {
         return "index";
     }
 
-    @GetMapping("/chooseMode")
-    public String chooseMode(Model model) {
-        return "chooseMode";
-    }
-	
     @PostMapping("/startGame")
     public String startGame(@RequestParam("mode") GameMode mode, Model model) {
         this.mode = mode;
@@ -108,7 +110,7 @@ public class TicTacToeController {
                 switchPlayer();
             }
         }
-        
+
         model.addAttribute("board", this.board);
         model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("message", "Game has been reset. Let's play again!");
@@ -117,15 +119,15 @@ public class TicTacToeController {
     }
 
     private void initializePlayers() {
-    	Random random = new Random();
-    	if (random.nextBoolean()) {
-    	    this.playerX = new LocalPlayer('X');
-    	    this.playerO = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('O') : new AIPlayer('O');
-    	} else {
-    	    this.playerO = new LocalPlayer('O');
-    	    this.playerX = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('X') : new AIPlayer('X');
-    	}
-      	this.currentPlayer = this.playerX;
+        Random random = new Random();
+        if (random.nextBoolean()) {
+            this.playerX = new LocalPlayer('X');
+            this.playerO = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('O') : new AIPlayer('O');
+        } else {
+            this.playerO = new LocalPlayer('O');
+            this.playerX = (this.mode == GameMode.LOCAL_PLAY) ? new LocalPlayer('X') : new AIPlayer('X');
+        }
+        this.currentPlayer = this.playerX;
     }
 
     private void switchPlayer() {
