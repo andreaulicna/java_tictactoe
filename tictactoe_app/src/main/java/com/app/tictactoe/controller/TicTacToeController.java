@@ -42,14 +42,6 @@ public class TicTacToeController {
         }
     }
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("board", this.board);
-        model.addAttribute("currentPlayer", this.currentPlayer);
-        model.addAttribute("gameOver", this.gameOver);
-        return "index";
-    }
-
     @PostMapping("/startGame")
     public String startGame(@RequestParam("mode") GameMode mode, Model model) {
         this.mode = mode;
@@ -69,7 +61,7 @@ public class TicTacToeController {
         model.addAttribute("board", this.board);
         model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("gameOver", this.gameOver);
-        return "index";
+        return "game";
     }
 
     @PostMapping("/move")
@@ -93,7 +85,7 @@ public class TicTacToeController {
         model.addAttribute("board", this.board);
         model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("gameOver", this.gameOver);
-        return "index";
+        return "game";
     }
 
     @PostMapping("/reset")
@@ -115,7 +107,7 @@ public class TicTacToeController {
         model.addAttribute("currentPlayer", this.currentPlayer);
         model.addAttribute("message", "Game has been reset. Let's play again!");
         model.addAttribute("gameOver", this.gameOver);
-        return "index";
+        return "game";
     }
 
     private void initializePlayers() {
