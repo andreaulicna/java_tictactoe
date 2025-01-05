@@ -1,28 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Tic Tac Toe</title>
+    <style>
+        table {
+            margin: 20px auto;
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+        td {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #000;
+        }
+        .board-button {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+        .message {
+            text-align: center;
+            font-size: 20px;
+            margin: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
-    <p th:if="${currentPlayer != null}" th:text="'Current Player: ' + ${currentPlayer.getSymbol()} + ${currentPlayer}"></p>
-    <table th:if="${currentPlayer != null}">
+    <h1 style="text-align: center;">Tic Tac Toe</h1>
+    <div class="message" th:text="${message}"></div>
+    
+    <p th:if="${currentPlayer != null}" style="text-align: center;" th:text="'Current Player: ' + ${currentPlayer.getSymbol()}"></p>
+    
+    <table th:if="${currentPlayer != null}" style="margin: 0 auto;">
         <tr th:each="row, rowStat : ${#numbers.sequence(0, 2)}">
             <td th:each="col, colStat : ${#numbers.sequence(0, 2)}">
                 <form th:action="@{/move}" method="post">
                     <input type="hidden" name="row" th:value="${row}" />
                     <input type="hidden" name="col" th:value="${col}" />
-                    <button type="submit" th:text="${board.getValue(row, col)}" th:disabled="${gameOver || board.getValue(row, col) != ' '}"> </button>
+                    <button class="board-button" type="submit" th:text="${board.getValue(row, col)}" th:disabled="${gameOver || board.getValue(row, col) != ' '}"> </button>
                 </form>
             </td>
         </tr>
     </table>
-    <p th:text="${message}"></p>
-    <form th:if="${gameOver}" th:action="@{/reset}" method="post">
-        <button type="submit">Play Again</button>
-    </form>
-    <form th:if="${gameOver}" th:action="@{/}" method="get">
-        <button type="submit">Dashboard</button>
-    </form>
+
+    <div th:if="${gameOver}" style="text-align: center; margin-top: 20px;">
+        <form th:action="@{/reset}" method="post">
+            <button type="submit">Play Again</button>
+        </form>
+        <form th:action="@{/}" method="get">
+            <button type="submit">Dashboard</button>
+        </form>
+    </div>
 </body>
 </html>
