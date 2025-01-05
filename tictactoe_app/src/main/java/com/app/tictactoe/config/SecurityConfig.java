@@ -18,11 +18,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) 
             throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
+        AuthenticationManagerBuilder authenticationManagerBuilder = 
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
+        return authenticationManagerBuilder.build();
     }
 
     @Bean
@@ -40,8 +40,7 @@ public class SecurityConfig {
             .logout((logout) -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
-            )
-            .csrf().disable();
+            );
 
         return http.build();
     }

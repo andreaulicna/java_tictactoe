@@ -1,14 +1,9 @@
 package com.app.tictactoe.game;
 
 import java.util.Random;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.app.tictactoe.controller.TicTacToeController;
 
 public class AIPlayer extends AbstractPlayer {
 
-    private static final Logger logger = LoggerFactory.getLogger(TicTacToeController.class);
 
     public AIPlayer(char symbol) {
         super(symbol);
@@ -87,7 +82,6 @@ public class AIPlayer extends AbstractPlayer {
                     board.updateWithNewMove(row, col, this.symbol);
                     int[] score = minimax(board, 0, false);
                     board.undoMove(row, col, ' ');  // Undo move
-                    //logger.info("Board state unmove:\n{}", board.toString());
                     if (score[0] > bestScore[0] || (score[0] == bestScore[0] && score[1] > bestScore[1])) {
                         bestScore = score;
                         bestMove[0] = row;
@@ -104,6 +98,5 @@ public class AIPlayer extends AbstractPlayer {
         int[] move = this.calculateMove(board);
 
         board.updateWithNewMove(move[0], move[1], this.getSymbol());
-        logger.info("Selected move: {}, {}", move[0], move[1]);
     }
 }
