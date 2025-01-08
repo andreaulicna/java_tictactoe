@@ -2,7 +2,24 @@
 
 _This project is a demonstration of the adaptability and problem-solving philosophy championed by 42 programming school: programming is about thinking, not syntax._
 
-Although `Java` isn't my primary programming language, I challenged myself to translate a part of a 42 project, originally written in `Python`, into `Java`. The goal wasn't to become an expert in `Java` overnight but to prove that with strong programming fundamentals, the ability to self-learn, a problem-solving mindset, tackling a new language is very much than possible. Let's review how far I got in just about 40 hours.
+Although Java isn't my primary programming language, I challenged myself to translate a part of a 42 project, originally written in `Python`, into Java. The goal wasn't to become an expert in Java overnight but to prove that with strong programming fundamentals, the ability to self-learn, a problem-solving mindset, tackling a new language is very much than possible. Let's review how far I got in just about 40 hours.
+
+# Table of Contents
+
+1. [From Pong to Tic Tac Toe](#from-pong-to-tic-tac-toe)
+   - [The Original Project: `ft_transcendence`](#the-original-project-ft_transcendence)
+   - [Scope of the Rewritten Project](#scope-of-the-rewritten-project)
+2. [Incremental Development](#incremental-development)
+   - [1. Command-Line Application](#1-command-line-application)
+   - [2. Web Interface](#2-web-interface)
+   - [3. AI Implementation (Minimax Algorithm)](#3-ai-implementation-minimax-algorithm)
+   - [4. User Authentication and Database Integration](#4-user-authentication-and-database-integration)
+   - [5. Kotlin Integration (Interoperability Demonstration)](#5-kotlin-integration-interoperability-demonstration)
+3. [Main Java Concepts](#main-java-concepts)
+4. [Java vs Kotlin](#java-vs-kotlin)
+5. [Future Development](#future-development)
+6. [How to Run the Project](#how-to-run-the-project)
+7. [Sources](#sources)
 
 <br>
 
@@ -22,13 +39,13 @@ It's the last project of the 42 Core Curriculum and the work of our group can be
 ### Scope of the Rewritten Project
 For this adapted project, I focused on rewriting user registration and login functionality from the original Pong game backend. Additionally, this project features a local match and an AI match of Tic Tac Toe game.
 
-The backend is built using a combination of `Java` and `Kotlin`, showcasing their interoperability:  
+The backend is built using a combination of Java and Kotlin, showcasing their interoperability:  
 
-- **`Java`**:  
+- **Java**:  
   - Core functionality and logic are implemented in Java classes.  
   - The [`Spring Boot framework`](https://spring.io/projects/spring-boot) is used to handle API calls and backend services.  
 
-- **`Kotlin`**:  
+- **Kotlin**:  
   - llers are written in Kotlin to demonstrate seamless integration with Java.  
 
 Further, the backend is connected to a `PostgreSQL` to store user information and record match results.
@@ -124,12 +141,12 @@ Additionally, I also set up `PostgreSQL` database integration (see Database Diag
 <br>
 
 ### 5. Kotlin Integration (Interoperability Demonstration)
-Finally, I rewrote a part of the code (llers `TicTacToeController.java` and `AuthController.java` into `Kotlin`. Given that `Kotlin` is completely interoperability with `Java` there was no disruption to the functionality of the application. I'll discuss the main changes in Java vs Kotlin part below.
+Finally, I rewrote a part of the code (llers `TicTacToeController.java` and `AuthController.java` into Kotlin. Given that Kotlin is completely interoperability with Java there was no disruption to the functionality of the application. I'll discuss the main changes in Java vs Kotlin part below.
 
 <br>
 
-## Main `Java` Concepts
-This section highlights the main `Java` concepts used in this project. The concepts were predominantly used for demonstative purposes, and so may seem like a bit of an overengineering for such a small project.
+## Main Java Concepts
+This section highlights the main Java concepts used in this project. The concepts were predominantly used for demonstative purposes, and so may seem like a bit of an overengineering for such a small project.
 
 <br>
 
@@ -240,7 +257,7 @@ Method overriding allows a subclass to provide a specific implementation of a me
 <br>
 
 ## Java vs Kotlin
-This section takes a closer look at the main difference between `Java` and `Kotlin` as demostrated by examples from the rewriting of the controllers.
+This section takes a closer look at the main difference between Java and Kotlin as demostrated by examples from the rewriting of the controllers.
 <br>
 - [AuthController.kt](https://github.com/andreaulicna/csob_java_project/blob/d3e8dbe1a9060f59459c24667e20dfa9bffa5d2e/tictactoe_app/src/main/kotlin/com/app/tictactoe/controller/AuthController.kt) vs. [AuthController.java](https://github.com/andreaulicna/csob_java_project/blob/99b14ff3518a15edce8255cd25a8df7b917c0c0b/tictactoe_app/src/main/java/com/app/tictactoe/controller/AuthController.java)
 - [TicTacToeController.kt](https://github.com/andreaulicna/csob_java_project/blob/d3e8dbe1a9060f59459c24667e20dfa9bffa5d2e/tictactoe_app/src/main/kotlin/com/app/tictactoe/controller/TicTacToeController.kt) vs. [TicTacToeController.java](https://github.com/andreaulicna/csob_java_project/blob/99b14ff3518a15edce8255cd25a8df7b917c0c0b/tictactoe_app/src/main/java/com/app/tictactoe/controller/TicTacToeController.java)
@@ -248,7 +265,7 @@ This section takes a closer look at the main difference between `Java` and `Kotl
 <br>
 
 ### Type Inference
-**`Java`** requires explicitly specifying the type:
+**Java** requires explicitly specifying the type:
 
 ```java
 Random random = new Random();
@@ -263,7 +280,7 @@ public String startGame(@RequestParam("mode") GameMode mode, Model model) {
 ```
 <br>
 
-**`Kotlin`** infers types automatically, reducing verbosity while keeping type safety:
+**Kotlin** infers types automatically, reducing verbosity while keeping type safety:
 
 ```kotlin
 val random = Random()
@@ -278,7 +295,7 @@ fun startGame(@RequestParam mode: GameMode, model: Model): String {
 <br>
 
 ### Null Safety
-**`Java`** needs manual null checks (that are prone to human error) to avoid exceptions:
+**Java** needs manual null checks (that are prone to human error) to avoid exceptions:
 
 ```java
 if (userDetails != null) {
@@ -287,7 +304,7 @@ if (userDetails != null) {
 ```
 <br>
 
-**`Kotlin`** has `?` that checks for `null` and skips the block if `null` (the `let` function executes the block only if `userDetails` is not `null`):
+**Kotlin** has `?` that checks for `null` and skips the block if `null` (the `let` function executes the block only if `userDetails` is not `null`):
 
 ```kotlin
 userDetails?.let {
@@ -298,7 +315,7 @@ userDetails?.let {
 <br>
 
 ### No Boilerplate for Getters and Setters:
-**`Java`** requires explicit getters and setters:
+**Java** requires explicit getters and setters:
 
 ```java
 model.addAttribute("user", userService.findById(user.getId()));
@@ -315,7 +332,7 @@ public void setBoard(Board board) {
 ```
 <br>
 
-**`Kotlin`** automatically provides getters and settors, such `getId()` for the `User` class, allowing direct access to the variable via `user.id`:
+**Kotlin** automatically provides getters and settors, such `getId()` for the `User` class, allowing direct access to the variable via `user.id`:
 
 ```kotlin
 model.addAttribute("user", userService.findById(user.id))
@@ -324,7 +341,7 @@ model.addAttribute("user", userService.findById(user.id))
 <br>
 
 ### `is` vs. `instanceof`
-**`Java`** requires both type-checking and explicit casting:
+**Java** requires both type-checking and explicit casting:
 
 ```java
 if (this.currentPlayer instanceof AIPlayer) {
@@ -334,7 +351,7 @@ if (this.currentPlayer instanceof AIPlayer) {
 ```
 <br>
 
-**`Kotlin`** automatically automatically allows casting within the same block by using the `is` keyword, simplifiying handling of polymorphism:
+**Kotlin** automatically automatically allows casting within the same block by using the `is` keyword, simplifiying handling of polymorphism:
 
 ```kotlin
 if (currentPlayer is AIPlayer) {
@@ -354,7 +371,7 @@ That being said, here are a few areas that could be further developed in the fut
 - **Improved AI (Algorithmic Focus)**: The current AI uses a full version of the Minimax algorithm, making the AI player unbeatable. This could be enhanced or replaced with a more advanced variant to make the AI more human-like. Yet, this improvement is focused more on algorithmic complexity than demonstrating language-specific features, which is why it was not prioritized in this version.
 
 ### Database
-The current project has a minimal database structure to save user information and match history. That could be expanded to provide user statistics or keep track of match history for different game modes. Yet, this aspect would shift the focus of the current project more toward database design, which is outside the scope of demonstrating `Java`/`Kotlin` coding practices.
+The current project has a minimal database structure to save user information and match history. That could be expanded to provide user statistics or keep track of match history for different game modes. Yet, this aspect would shift the focus of the current project more toward database design, which is outside the scope of demonstrating Java/Kotlin coding practices.
 
 ### Distribution
 Wrapping the entire application into a Docker container would make it easier to distribute and deploy the project. However, this requires some system administration work, which, again, falls outside the scope of this project.
@@ -396,10 +413,11 @@ http://localhost:8080
 
 ## Sources
 
-https://docs.oracle.com/en/java/
-https://docs.spring.io/spring-boot/index.html
-https://kotlinlang.org/docs/home.html
-https://towardsdatascience.com/game-theory-minimax-f84ee6e4ae6e
+- [Java Documentation](https://docs.oracle.com/en/java/)
+- [Spring Boot Documentation](https://docs.spring.io/spring-boot/index.html)
+- [Kotlin Documentation](https://kotlinlang.org/docs/home.html)
+- [Game Theory Minimax Algorithm](https://towardsdatascience.com/game-theory-minimax-f84ee6e4ae6e)
+
 
 
 
