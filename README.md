@@ -15,6 +15,7 @@ Although Java isn't my primary programming language, I challenged myself to tran
    - [3. AI Implementation (Minimax Algorithm)](#3-ai-implementation-minimax-algorithm)
    - [4. User Authentication and Database Integration](#4-user-authentication-and-database-integration)
    - [5. Kotlin Integration (Interoperability Demonstration)](#5-kotlin-integration-interoperability-demonstration)
+   - [6. Polishing](#6-polishing)
 3. [Main Java Concepts](#main-java-concepts)
 4. [Java vs Kotlin](#java-vs-kotlin)
 5. [Future Development](#future-development)
@@ -130,18 +131,26 @@ To introduce a bit of a user management and authentication layer to the applicat
 
 <br>
 
-Additionally, I also set up `PostgreSQL` database integration (see Database Diagram for more details) to store user information and the results of the AI matches for each user:
+Additionally, I set up `PostgreSQL` database integration to store user information and the results of the AI matches for each user:
 <br>
 ![image](https://github.com/user-attachments/assets/53bcc316-70ff-42e8-85a6-dc232b723b39)
-
-![image](https://github.com/user-attachments/assets/d27fb628-6a0b-4525-aa60-8631467bb89e)
 
 ![image](https://github.com/user-attachments/assets/bcabc7f2-29c8-4043-b4fa-12a9538de24d)
 
 <br>
 
 ### 5. Kotlin Integration (Interoperability Demonstration)
-Finally, I rewrote a part of the code (llers `TicTacToeController.java` and `AuthController.java` into Kotlin. Given that Kotlin is completely interoperability with Java there was no disruption to the functionality of the application. I'll discuss the main changes in Java vs Kotlin part below.
+Finally, I rewrote a part of the code (controllers `TicTacToeController.java` and `AuthController.java`) into Kotlin. Given that Kotlin is completely interoperability with Java there was no disruption to the functionality of the application. I'll discuss the main changes in Java vs Kotlin part below.
+
+### 6. Polishing
+To wrap up, there were some last changes to the look and feel of the application done.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ff462902-2639-4f65-9b0d-e3b8fe2470aa" alt="image" width="400" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/aa0aeee0-9081-465f-820b-6dfaabc7612d" alt="image" width="350" />
+</div>
+
 
 <br>
 
