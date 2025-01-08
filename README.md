@@ -402,6 +402,24 @@ DATABASE_PASSWORD=your_db_password
 ### Step 4: Create the Database
 Create a database matching the url, username and password in the .env file.
 
+```
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE matches (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    result VARCHAR(50) NOT NULL,
+    timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    mode VARCHAR(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+
 ### Step 5: Install Dependencies and Run
 ```
 mvn clean install
