@@ -20,7 +20,7 @@
     </properties>
 
     <dependencies>
-        <!-- Spring Boot Starter Dependencies -->
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -67,17 +67,16 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
-			<version>${kotlin.version}</version>
+            <version>${kotlin.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
-			<version>${kotlin.version}</version>
+            <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
 
     <build>
-		<sourceDirectory>src/main/kotlin</sourceDirectory>
         <plugins>
             <!-- Spring Boot Maven Plugin -->
             <plugin>
@@ -92,16 +91,29 @@
                 <version>${kotlin.version}</version>
                 <executions>
                     <execution>
+                        <id>compile</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
                             <goal>test-compile</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <sourceDirs>
+                        <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                        <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                    </sourceDirs>
+                </configuration>
             </plugin>
 
-            <!-- Java Compiler Plugin to scan both Java and Kotlin directories -->
+            <!-- Java Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -109,10 +121,6 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
-                    <compileSourceRoots>
-                        <compileSourceRoot>src/main/java</compileSourceRoot>
-                        <compileSourceRoot>src/main/kotlin</compileSourceRoot>
-                    </compileSourceRoots>
                 </configuration>
             </plugin>
         </plugins>
