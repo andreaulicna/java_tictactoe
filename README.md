@@ -2,7 +2,7 @@
 
 _This project is a demonstration of the adaptability and problem-solving philosophy championed by 42 programming school: programming is about thinking, not syntax._
 
-Although Java isn't my primary programming language, I challenged myself to translate a part of a 42 project, originally written in `Python`, into Java. The goal wasn't to become an expert in Java overnight but to prove that with strong programming fundamentals, the ability to self-learn, a problem-solving mindset, tackling a new language is very much than possible. Let's review how far I got in just about 40 hours.
+Although Java isn't my primary programming language, I challenged myself to translate a part of a 42 project, originally written in `Python`, into `Java`. The goal wasn't to become an expert in `Java` overnight but to prove that with strong programming fundamentals, the ability to self-learn, a problem-solving mindset, tackling a new language is very much than possible. Let's review how far I got in just about 40 hours.
 
 # Table of Contents
 
@@ -47,7 +47,7 @@ The backend is built using a combination of Java and Kotlin, showcasing their in
   - The [`Spring Boot framework`](https://spring.io/projects/spring-boot) is used to handle API calls and backend services.  
 
 - **Kotlin**:  
-  - llers are written in Kotlin to demonstrate seamless integration with Java.  
+  - Controllers are written in Kotlin to demonstrate seamless integration with Java.  
 
 Further, the backend is connected to a `PostgreSQL` to store user information and record match results.
 
